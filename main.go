@@ -59,6 +59,7 @@ func main() {
 	box := packr.NewBox("./dist")
 	// r.StaticFS("/", box)
 	r.Use(utils.Serve("/", box))
+	// r.NoRoute(utils.RedirectIndex())
 
 	r.GET("/api/:namespace/exec", func(c *gin.Context) {
 		namespace := c.Param("namespace")
@@ -269,8 +270,6 @@ func main() {
 			return false
 		})
 	})
-
-	r.NoRoute(utils.RedirectIndex())
 
 	r.Run(":9898") // listen and serve on 0.0.0.0:8080
 }
