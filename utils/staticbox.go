@@ -19,6 +19,8 @@ func Serve(urlPrefix string, box packr.Box) gin.HandlerFunc {
 		if box.Has(c.Request.URL.Path) {
 			fileserver.ServeHTTP(c.Writer, c.Request)
 			c.Abort()
+		} else {
+			c.Redirect(http.StatusMovedPermanently, "/")
 		}
 	}
 }
@@ -26,7 +28,8 @@ func Serve(urlPrefix string, box packr.Box) gin.HandlerFunc {
 // RedirectIndex returns a middleware handler that serves redirects to /
 func RedirectIndex() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/index.html")
+		fmt.Println(c.Request.URL.Path)
+		c.Redirect(http.StatusMovedPermanently, "/ui/index.html")
 		c.Abort()
 	}
 }

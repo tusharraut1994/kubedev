@@ -56,11 +56,6 @@ func main() {
 		Debug:              true,
 	}))
 
-	box := packr.NewBox("./dist")
-	// r.StaticFS("/", box)
-	r.Use(utils.Serve("/", box))
-	r.NoRoute(utils.RedirectIndex())
-
 	r.GET("/api/:namespace/exec", func(c *gin.Context) {
 		namespace := c.Param("namespace")
 		command := strings.Fields(c.Query("command"))
@@ -270,6 +265,11 @@ func main() {
 			return false
 		})
 	})
+
+	box := packr.NewBox("./dist")
+	// r.StaticFS("/ui", box)
+	r.Use(utils.Serve("/", box))
+	// r.NoRoute(utils.RedirectIndex())
 
 	r.Run(":9898") // listen and serve on 0.0.0.0:8080
 }
