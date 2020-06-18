@@ -59,7 +59,7 @@ func main() {
 	box := packr.NewBox("./dist")
 	// r.StaticFS("/", box)
 	r.Use(utils.Serve("/", box))
-	// r.NoRoute(utils.RedirectIndex())
+	r.NoRoute(utils.RedirectIndex())
 
 	r.GET("/api/:namespace/exec", func(c *gin.Context) {
 		namespace := c.Param("namespace")
